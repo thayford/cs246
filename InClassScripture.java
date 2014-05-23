@@ -6,6 +6,8 @@
 
 package inclassscripture;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Comparator;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -99,12 +101,34 @@ public class InClassScripture extends Application {
                 
                 Button btn3 = new Button();
                 btn3.setText(""
-                        + "Sort");
+                        + "Save to file");
                 btn3.setOnAction(new EventHandler<ActionEvent>() {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        //sort
+                        BufferedWriter   out = null;
+
+                         try {
+                            out = new BufferedWriter(new FileWriter("Scriptures.txt"));
+                            String c;
+                            int i = 0;
+                            Object[] temp = items.toArray();
+                            while (i < temp.length) {
+                              out.write(temp[i].toString());
+                              out.newLine();
+                              i++;
+                            }
+                             }catch(Exception ex) {
+                               System.out.println("Error: " + ex);
+                             }finally {
+                               try {
+                             if (out != null) {
+                               out.close();
+                             }
+                                   }catch(Exception ex) {
+                               System.out.println("Error: " + ex);
+                               }
+                         }
                                 
                     }
                 });
